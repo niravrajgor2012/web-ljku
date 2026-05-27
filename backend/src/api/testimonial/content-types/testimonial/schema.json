@@ -1,0 +1,24 @@
+{
+  "kind": "collectionType",
+  "collectionName": "testimonials",
+  "info": {
+    "singularName": "testimonial",
+    "pluralName": "testimonials",
+    "displayName": "Testimonial",
+    "description": "Student and alumni testimonials"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "studentName": { "type": "string", "required": true },
+    "image": { "type": "media", "multiple": false, "allowedTypes": ["images"] },
+    "review": { "type": "text", "required": true },
+    "rating": { "type": "integer", "min": 1, "max": 5 },
+    "course": { "type": "string" },
+    "batch": { "type": "string" },
+    "currentRole": { "type": "string" },
+    "company": { "type": "string" },
+    "isFeatured": { "type": "boolean", "default": false }
+  }
+}

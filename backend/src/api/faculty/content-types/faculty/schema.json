@@ -1,0 +1,32 @@
+{
+  "kind": "collectionType",
+  "collectionName": "faculties",
+  "info": {
+    "singularName": "faculty",
+    "pluralName": "faculties",
+    "displayName": "Faculty",
+    "description": "Faculty members"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "name": { "type": "string", "required": true },
+    "designation": { "type": "string" },
+    "qualification": { "type": "string" },
+    "image": { "type": "media", "multiple": false, "allowedTypes": ["images"] },
+    "bio": { "type": "richtext" },
+    "email": { "type": "email" },
+    "experience": { "type": "integer" },
+    "specialization": { "type": "string" },
+    "socialLinks": { "type": "json" },
+    "publications": { "type": "integer" },
+    "isFeatured": { "type": "boolean", "default": false },
+    "department": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::department.department",
+      "inversedBy": "faculty"
+    }
+  }
+}

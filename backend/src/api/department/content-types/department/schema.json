@@ -1,0 +1,35 @@
+{
+  "kind": "collectionType",
+  "collectionName": "departments",
+  "info": {
+    "singularName": "department",
+    "pluralName": "departments",
+    "displayName": "Department",
+    "description": "University departments and schools"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "title": { "type": "string", "required": true },
+    "slug": { "type": "uid", "targetField": "title", "required": true },
+    "shortDescription": { "type": "text" },
+    "fullDescription": { "type": "richtext" },
+    "icon": { "type": "string" },
+    "color": { "type": "string" },
+    "bannerImage": { "type": "media", "multiple": false, "required": false, "allowedTypes": ["images"] },
+    "galleryImages": { "type": "media", "multiple": true, "required": false, "allowedTypes": ["images"] },
+    "videos": { "type": "media", "multiple": true, "required": false, "allowedTypes": ["videos"] },
+    "established": { "type": "string" },
+    "totalStudents": { "type": "integer" },
+    "totalFaculty": { "type": "integer" },
+    "programs": { "type": "relation", "relation": "oneToMany", "target": "api::program.program", "mappedBy": "department" },
+    "faculty": { "type": "relation", "relation": "oneToMany", "target": "api::faculty.faculty", "mappedBy": "department" },
+    "highlights": { "type": "json" },
+    "seo": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.seo"
+    }
+  }
+}

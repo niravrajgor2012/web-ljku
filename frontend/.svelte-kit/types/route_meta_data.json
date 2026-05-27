@@ -1,0 +1,59 @@
+{
+	"/": [
+		"src/routes/+page.server.ts",
+		"src/routes/+layout.ts",
+		"src/routes/+layout.ts"
+	],
+	"/about": [
+		"src/routes/+layout.ts"
+	],
+	"/admissions": [
+		"src/routes/+layout.ts"
+	],
+	"/careers": [
+		"src/routes/+layout.ts"
+	],
+	"/contact": [
+		"src/routes/+layout.ts"
+	],
+	"/departments": [
+		"src/routes/departments/+page.server.ts",
+		"src/routes/+layout.ts"
+	],
+	"/departments/[slug]": [
+		"src/routes/departments/[slug]/+page.server.ts",
+		"src/routes/+layout.ts"
+	],
+	"/events": [
+		"src/routes/events/+page.server.ts",
+		"src/routes/+layout.ts"
+	],
+	"/faculty": [
+		"src/routes/faculty/+page.server.ts",
+		"src/routes/+layout.ts"
+	],
+	"/faq": [
+		"src/routes/+layout.ts"
+	],
+	"/gallery": [
+		"src/routes/gallery/+page.server.ts",
+		"src/routes/+layout.ts"
+	],
+	"/placements": [
+		"src/routes/placements/+page.server.ts",
+		"src/routes/+layout.ts"
+	],
+	"/programs": [
+		"src/routes/programs/+page.server.ts",
+		"src/routes/+layout.ts"
+	],
+	"/research": [
+		"src/routes/+layout.ts"
+	],
+	"/sitemap.xml": [
+		"src/routes/sitemap.xml/+server.ts"
+	],
+	"/student-life": [
+		"src/routes/+layout.ts"
+	]
+}

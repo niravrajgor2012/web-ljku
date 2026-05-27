@@ -1,0 +1,24 @@
+{
+  "kind": "collectionType",
+  "collectionName": "gallery_items",
+  "info": {
+    "singularName": "gallery",
+    "pluralName": "galleries",
+    "displayName": "Gallery",
+    "description": "University photo gallery"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "title": { "type": "string" },
+    "image": { "type": "media", "multiple": false, "required": true, "allowedTypes": ["images"] },
+    "category": {
+      "type": "enumeration",
+      "enum": ["Campus", "Events", "Sports", "Cultural", "Academic", "Placements", "Infrastructure", "Student-Life"]
+    },
+    "caption": { "type": "text" },
+    "isFeatured": { "type": "boolean", "default": false },
+    "date": { "type": "date" }
+  }
+}

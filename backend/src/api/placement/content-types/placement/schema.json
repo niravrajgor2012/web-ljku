@@ -1,0 +1,30 @@
+{
+  "kind": "collectionType",
+  "collectionName": "placements",
+  "info": {
+    "singularName": "placement",
+    "pluralName": "placements",
+    "displayName": "Placement",
+    "description": "Placement records and success stories"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "studentName": { "type": "string", "required": true },
+    "companyName": { "type": "string", "required": true },
+    "package": { "type": "decimal" },
+    "role": { "type": "string" },
+    "year": { "type": "integer" },
+    "image": { "type": "media", "multiple": false, "allowedTypes": ["images"] },
+    "companyLogo": { "type": "media", "multiple": false, "allowedTypes": ["images"] },
+    "testimonial": { "type": "text" },
+    "batch": { "type": "string" },
+    "program": { "type": "string" },
+    "isFeatured": { "type": "boolean", "default": false },
+    "category": {
+      "type": "enumeration",
+      "enum": ["Campus", "Off-Campus", "Higher-Studies", "Entrepreneurship"]
+    }
+  }
+}

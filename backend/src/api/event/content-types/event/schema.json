@@ -1,0 +1,30 @@
+{
+  "kind": "collectionType",
+  "collectionName": "events",
+  "info": {
+    "singularName": "event",
+    "pluralName": "events",
+    "displayName": "Event",
+    "description": "University events and activities"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "title": { "type": "string", "required": true },
+    "slug": { "type": "uid", "targetField": "title", "required": true },
+    "date": { "type": "date", "required": true },
+    "endDate": { "type": "date" },
+    "time": { "type": "string" },
+    "venue": { "type": "string" },
+    "category": {
+      "type": "enumeration",
+      "enum": ["Academic", "Cultural", "Sports", "Technical", "Workshop", "Seminar", "Placement", "Other"]
+    },
+    "description": { "type": "richtext" },
+    "image": { "type": "media", "multiple": false, "allowedTypes": ["images"] },
+    "gallery": { "type": "media", "multiple": true, "allowedTypes": ["images"] },
+    "registrationLink": { "type": "string" },
+    "isFeatured": { "type": "boolean", "default": false }
+  }
+}

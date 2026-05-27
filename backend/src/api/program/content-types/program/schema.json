@@ -1,0 +1,41 @@
+{
+  "kind": "collectionType",
+  "collectionName": "programs",
+  "info": {
+    "singularName": "program",
+    "pluralName": "programs",
+    "displayName": "Program",
+    "description": "Academic programs and courses"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "title": { "type": "string", "required": true },
+    "slug": { "type": "uid", "targetField": "title", "required": true },
+    "degreeType": {
+      "type": "enumeration",
+      "enum": ["B.Tech", "M.Tech", "BBA", "MBA", "B.Pharm", "M.Pharm", "BCA", "MCA", "B.Arch", "B.Des", "BPT", "BJMC", "B.Com", "M.Com", "Ph.D", "Diploma", "Certificate"],
+      "required": true
+    },
+    "duration": { "type": "string" },
+    "eligibility": { "type": "text" },
+    "fees": { "type": "decimal" },
+    "description": { "type": "richtext" },
+    "brochurePDF": { "type": "media", "multiple": false, "allowedTypes": ["files"] },
+    "thumbnail": { "type": "media", "multiple": false, "allowedTypes": ["images"] },
+    "seats": { "type": "integer" },
+    "highlights": { "type": "json" },
+    "department": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::department.department",
+      "inversedBy": "programs"
+    },
+    "seo": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.seo"
+    }
+  }
+}

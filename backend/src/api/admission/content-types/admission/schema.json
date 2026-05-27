@@ -1,0 +1,26 @@
+{
+  "kind": "collectionType",
+  "collectionName": "admissions",
+  "info": {
+    "singularName": "admission",
+    "pluralName": "admissions",
+    "displayName": "Admission",
+    "description": "Admission information and deadlines"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "title": { "type": "string", "required": true },
+    "content": { "type": "richtext" },
+    "brochure": { "type": "media", "multiple": false, "allowedTypes": ["files"] },
+    "eligibility": { "type": "text" },
+    "deadline": { "type": "date" },
+    "applicationLink": { "type": "string" },
+    "process": { "type": "json" },
+    "documents": { "type": "json" },
+    "fees": { "type": "json" },
+    "isActive": { "type": "boolean", "default": true },
+    "year": { "type": "string" }
+  }
+}
