@@ -1,0 +1,40 @@
+import { p as public_env } from "../../../chunks/shared-server.js";
+const SITE_URL = public_env.PUBLIC_SITE_URL ?? "https://ljku.edu.in";
+const staticPages = [
+  { path: "/", priority: "1.0", changefreq: "daily" },
+  { path: "/about", priority: "0.9", changefreq: "monthly" },
+  { path: "/departments", priority: "0.9", changefreq: "weekly" },
+  { path: "/programs", priority: "0.9", changefreq: "weekly" },
+  { path: "/admissions", priority: "1.0", changefreq: "weekly" },
+  { path: "/faculty", priority: "0.8", changefreq: "monthly" },
+  { path: "/placements", priority: "0.9", changefreq: "monthly" },
+  { path: "/events", priority: "0.8", changefreq: "daily" },
+  { path: "/gallery", priority: "0.7", changefreq: "weekly" },
+  { path: "/student-life", priority: "0.7", changefreq: "monthly" },
+  { path: "/research", priority: "0.8", changefreq: "monthly" },
+  { path: "/contact", priority: "0.8", changefreq: "monthly" },
+  { path: "/careers", priority: "0.8", changefreq: "weekly" },
+  { path: "/faq", priority: "0.7", changefreq: "monthly" }
+];
+async function GET() {
+  const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${staticPages.map(
+    (page) => `  <url>
+    <loc>${SITE_URL}${page.path}</loc>
+    <changefreq>${page.changefreq}</changefreq>
+    <priority>${page.priority}</priority>
+    <lastmod>${(/* @__PURE__ */ new Date()).toISOString().split("T")[0]}</lastmod>
+  </url>`
+  ).join("\n")}
+</urlset>`;
+  return new Response(sitemap, {
+    headers: {
+      "Content-Type": "application/xml",
+      "Cache-Control": "max-age=3600"
+    }
+  });
+}
+export {
+  GET
+};
