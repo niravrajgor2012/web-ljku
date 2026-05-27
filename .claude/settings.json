@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm uninstall *)",
+      "Bash(rm d:/wd/frontend/src/routes/+page.server.ts d:/wd/frontend/src/routes/programs/+page.server.ts d:/wd/frontend/src/routes/departments/+page.server.ts d:/wd/frontend/src/routes/departments/[slug]/+page.server.ts d:/wd/frontend/src/routes/faculty/+page.server.ts d:/wd/frontend/src/routes/events/+page.server.ts d:/wd/frontend/src/routes/gallery/+page.server.ts d:/wd/frontend/src/routes/placements/+page.server.ts)"
+    ],
+    "additionalDirectories": [
+      "d:\\wd\\frontend\\src\\routes\\departments\\[slug]"
+    ]
+  }
+}
