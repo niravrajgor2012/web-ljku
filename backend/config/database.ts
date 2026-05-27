@@ -1,8 +1,10 @@
-export default ({ env }: { env: (key: string, defaultValue?: string) => string }) => ({
+import path from 'path';
+
+export default () => ({
   connection: {
     client: 'sqlite',
     connection: {
-      filename: env('DATABASE_FILENAME', '.tmp/data.db'),
+      filename: path.join(__dirname, '..', '.tmp', 'data.db'),
     },
     useNullAsDefault: true,
     acquireConnectionTimeout: 60000,
