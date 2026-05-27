@@ -1,0 +1,1 @@
+import{a as e}from"./DM-ZaLDo.js";async function c(i,t=!1,r=50){const a={"populate[image]":"true",sort:"date:desc","pagination[pageSize]":r};t&&(a["filters[isFeatured][$eq]"]=!0);const s=await e.fetchAPI("/galleries",a);return e.extractData(s)}export{c as g};

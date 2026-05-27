@@ -185,20 +185,6 @@
     "src": "src/routes/+layout.ts",
     "isEntry": true
   },
-  "src/routes/+page.server.ts": {
-    "file": "entries/pages/_page.server.ts.js",
-    "name": "entries/pages/_page.server.ts",
-    "src": "src/routes/+page.server.ts",
-    "isEntry": true,
-    "imports": [
-      "_departments.js",
-      "_programs.js",
-      "_events.js",
-      "_placements.js",
-      "_gallery.js",
-      "_api.js"
-    ]
-  },
   "src/routes/+page.svelte": {
     "file": "entries/pages/_page.svelte.js",
     "name": "entries/pages/_page.svelte",
@@ -213,6 +199,20 @@
     ],
     "css": [
       "_app/immutable/assets/_page.D809fShY.css"
+    ]
+  },
+  "src/routes/+page.ts": {
+    "file": "entries/pages/_page.ts.js",
+    "name": "entries/pages/_page.ts",
+    "src": "src/routes/+page.ts",
+    "isEntry": true,
+    "imports": [
+      "_departments.js",
+      "_programs.js",
+      "_events.js",
+      "_placements.js",
+      "_gallery.js",
+      "_api.js"
     ]
   },
   "src/routes/about/+page.svelte": {
@@ -261,15 +261,6 @@
       "_PageHero.js"
     ]
   },
-  "src/routes/departments/+page.server.ts": {
-    "file": "entries/pages/departments/_page.server.ts.js",
-    "name": "entries/pages/departments/_page.server.ts",
-    "src": "src/routes/departments/+page.server.ts",
-    "isEntry": true,
-    "imports": [
-      "_departments.js"
-    ]
-  },
   "src/routes/departments/+page.svelte": {
     "file": "entries/pages/departments/_page.svelte.js",
     "name": "entries/pages/departments/_page.svelte",
@@ -283,10 +274,10 @@
       "_CTABanner.js"
     ]
   },
-  "src/routes/departments/[slug]/+page.server.ts": {
-    "file": "entries/pages/departments/_slug_/_page.server.ts.js",
-    "name": "entries/pages/departments/_slug_/_page.server.ts",
-    "src": "src/routes/departments/[slug]/+page.server.ts",
+  "src/routes/departments/+page.ts": {
+    "file": "entries/pages/departments/_page.ts.js",
+    "name": "entries/pages/departments/_page.ts",
+    "src": "src/routes/departments/+page.ts",
     "isEntry": true,
     "imports": [
       "_departments.js"
@@ -305,14 +296,13 @@
       "_CTABanner.js"
     ]
   },
-  "src/routes/events/+page.server.ts": {
-    "file": "entries/pages/events/_page.server.ts.js",
-    "name": "entries/pages/events/_page.server.ts",
-    "src": "src/routes/events/+page.server.ts",
+  "src/routes/departments/[slug]/+page.ts": {
+    "file": "entries/pages/departments/_slug_/_page.ts.js",
+    "name": "entries/pages/departments/_slug_/_page.ts",
+    "src": "src/routes/departments/[slug]/+page.ts",
     "isEntry": true,
     "imports": [
-      "_events.js",
-      "_api.js"
+      "_departments.js"
     ]
   },
   "src/routes/events/+page.svelte": {
@@ -328,14 +318,14 @@
       "_index.js"
     ]
   },
-  "src/routes/faculty/+page.server.ts": {
-    "file": "entries/pages/faculty/_page.server.ts.js",
-    "name": "entries/pages/faculty/_page.server.ts",
-    "src": "src/routes/faculty/+page.server.ts",
+  "src/routes/events/+page.ts": {
+    "file": "entries/pages/events/_page.ts.js",
+    "name": "entries/pages/events/_page.ts",
+    "src": "src/routes/events/+page.ts",
     "isEntry": true,
     "imports": [
-      "_api.js",
-      "_departments.js"
+      "_events.js",
+      "_api.js"
     ]
   },
   "src/routes/faculty/+page.svelte": {
@@ -350,6 +340,16 @@
       "_api.js"
     ]
   },
+  "src/routes/faculty/+page.ts": {
+    "file": "entries/pages/faculty/_page.ts.js",
+    "name": "entries/pages/faculty/_page.ts",
+    "src": "src/routes/faculty/+page.ts",
+    "isEntry": true,
+    "imports": [
+      "_api.js",
+      "_departments.js"
+    ]
+  },
   "src/routes/faq/+page.svelte": {
     "file": "entries/pages/faq/_page.svelte.js",
     "name": "entries/pages/faq/_page.svelte",
@@ -360,15 +360,6 @@
       "_SEOHead.js",
       "_PageHero.js",
       "_CTABanner.js"
-    ]
-  },
-  "src/routes/gallery/+page.server.ts": {
-    "file": "entries/pages/gallery/_page.server.ts.js",
-    "name": "entries/pages/gallery/_page.server.ts",
-    "src": "src/routes/gallery/+page.server.ts",
-    "isEntry": true,
-    "imports": [
-      "_gallery.js"
     ]
   },
   "src/routes/gallery/+page.svelte": {
@@ -383,13 +374,13 @@
       "_api.js"
     ]
   },
-  "src/routes/placements/+page.server.ts": {
-    "file": "entries/pages/placements/_page.server.ts.js",
-    "name": "entries/pages/placements/_page.server.ts",
-    "src": "src/routes/placements/+page.server.ts",
+  "src/routes/gallery/+page.ts": {
+    "file": "entries/pages/gallery/_page.ts.js",
+    "name": "entries/pages/gallery/_page.ts",
+    "src": "src/routes/gallery/+page.ts",
     "isEntry": true,
     "imports": [
-      "_placements.js"
+      "_gallery.js"
     ]
   },
   "src/routes/placements/+page.svelte": {
@@ -405,14 +396,13 @@
       "_api.js"
     ]
   },
-  "src/routes/programs/+page.server.ts": {
-    "file": "entries/pages/programs/_page.server.ts.js",
-    "name": "entries/pages/programs/_page.server.ts",
-    "src": "src/routes/programs/+page.server.ts",
+  "src/routes/placements/+page.ts": {
+    "file": "entries/pages/placements/_page.ts.js",
+    "name": "entries/pages/placements/_page.ts",
+    "src": "src/routes/placements/+page.ts",
     "isEntry": true,
     "imports": [
-      "_programs.js",
-      "_departments.js"
+      "_placements.js"
     ]
   },
   "src/routes/programs/+page.svelte": {
@@ -427,6 +417,16 @@
       "_api.js",
       "_index.js",
       "_CTABanner.js"
+    ]
+  },
+  "src/routes/programs/+page.ts": {
+    "file": "entries/pages/programs/_page.ts.js",
+    "name": "entries/pages/programs/_page.ts",
+    "src": "src/routes/programs/+page.ts",
+    "isEntry": true,
+    "imports": [
+      "_programs.js",
+      "_departments.js"
     ]
   },
   "src/routes/research/+page.svelte": {
