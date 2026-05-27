@@ -25,7 +25,7 @@
         <p class="text-gray-600 leading-relaxed mb-4">
           LJ University (formerly known as LJ Institute of Engineering and Technology) was established in 2011 under the LJ Group of
           Institutions, one of Gujarat's most prestigious educational conglomerates with a legacy spanning over 35 years.
-        </p>
+        </p> 
         <p class="text-gray-600 leading-relaxed mb-4">
           Today, LJ University is a fully fledged university recognized by the University Grants Commission (UGC) under Section 2(f)
           and Section 12(B), with NAAC 'A+' accreditation — a testament to our unwavering commitment to quality education.
