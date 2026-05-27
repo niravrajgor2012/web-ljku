@@ -2,7 +2,6 @@
   import SEOHead from '$lib/components/seo/SEOHead.svelte';
   import PageHero from '$lib/components/ui/PageHero.svelte';
   import CTABanner from '$lib/components/home/CTABanner.svelte';
-
   const stats = [
     { value: '1980', label: 'Year Founded', sub: 'Lok Jagruti Kendra Trust' },
     { value: '32', label: 'Institutes', sub: 'Across two campuses' },
