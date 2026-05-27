@@ -1,9 +1,6 @@
 {
-  "buildCommand": "npm run build",
-  "outputDirectory": "build",
+  "buildCommand": "npm run vercel-build",
+  "outputDirectory": ".vercel/output",
   "cleanUrls": true,
-  "trailingSlash": false,
-  "rewrites": [
-    { "source": "/(.*)", "destination": "/200.html" }
-  ]
+  "trailingSlash": false
 }
