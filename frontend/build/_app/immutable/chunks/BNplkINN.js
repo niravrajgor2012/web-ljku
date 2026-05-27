@@ -1,1 +1,0 @@
-import{a as t}from"./DM-ZaLDo.js";async function n(a=10,s=!1){const e={"populate[image]":"true",sort:"date:desc","pagination[pageSize]":a};s&&(e["filters[isFeatured][$eq]"]=!0);const r=await t.fetchAPI("/events",e);return t.extractData(r)}export{n as g};

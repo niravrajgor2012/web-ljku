@@ -1,1 +1,0 @@
-import{a as t}from"./DM-ZaLDo.js";async function s(r){const a={"populate[thumbnail]":"true","populate[department][fields]":"title,slug",sort:"title:asc","pagination[pageSize]":100},e=await t.fetchAPI("/programs",a);return t.extractData(e)}export{s as g};

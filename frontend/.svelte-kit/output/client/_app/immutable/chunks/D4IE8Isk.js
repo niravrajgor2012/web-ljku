@@ -1,1 +1,0 @@
-import{a}from"./DM-ZaLDo.js";async function p(t=!1,r=20){const e={"populate[image]":"true","populate[companyLogo]":"true",sort:"year:desc","pagination[pageSize]":r};t&&(e["filters[isFeatured][$eq]"]=!0);const s=await a.fetchAPI("/placements",e);return a.extractData(s)}export{p as g};
