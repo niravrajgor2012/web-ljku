@@ -1,0 +1,404 @@
+LJ University Website — Q&A Log
+================================================================
+Project: Full-stack university website (SvelteKit + Strapi CMS)
+Location: d:\wd
+Last updated: 2026-05-28
+================================================================
+
+
+================================================================
+PHASE 1 — Strapi Backend Startup & Errors
+================================================================
+
+----------------------------------------------------------------
+Q1. TypeError: Cannot read properties of undefined (reading 'kind')
+    (Strapi schema loading error on startup)
+----------------------------------------------------------------
+A: Root cause: Strapi reads schemas from dist/src/api/*/content-types/
+   */schema.json but tsc only emits .js files, leaving JSON behind.
+   Fix:
+   - Manually copied 9 schema.json files into dist/
+   - Added a `copy-schemas` npm script to backend/package.json so
+     `develop` / `start` / `build` automatically copy schemas:
+       "copy-schemas": "node -e \"...cpSync src/api -> dist/src/api...\"",
+       "develop": "npm run copy-schemas && strapi develop",
+       "start":   "npm run copy-schemas && strapi start",
+       "build":   "strapi build && npm run copy-schemas"
+
+----------------------------------------------------------------
+Q2. Error: The plural name "news" should be unique
+----------------------------------------------------------------
+A: Strapi validates singularName + pluralName uniqueness across all
+   collections. The News collection had both = "news".
+   Fix:
+   - Changed pluralName to "news-articles" in
+     backend/src/api/news/content-types/news/schema.json
+   - Updated frontend/src/lib/services/news.ts: '/news' -> '/news-articles'
+
+----------------------------------------------------------------
+Q3. Error: Missing auth.secret
+----------------------------------------------------------------
+A: config/admin.js didn't exist. Created it:
+       module.exports = ({ env }) => ({
+         auth:     { secret: env('ADMIN_JWT_SECRET', 'tobemodified') },
+         apiToken: { salt:   env('API_TOKEN_SALT',   'tobemodified') },
+         transfer: { token: { salt: env('TRANSFER_TOKEN_SALT', 'tobemodified') } },
+       });
+
+----------------------------------------------------------------
+Q4. ENOENT: favicon.ico + POST /admin/register-admin 500
+----------------------------------------------------------------
+A: Two issues:
+   - Default favicon middleware looked at app root, not public/.
+     Created backend/public/favicon.ico (minimal 1x1 ICO) and updated
+     config/middlewares.js to use { name: 'strapi::favicon',
+     config: { path: './public/favicon.ico' } }.
+   - Admin registration 500 was due to placeholder ("tobemodified")
+     secrets that couldn't sign JWT. Generated real secrets with
+     crypto.randomBytes and replaced APP_KEYS, API_TOKEN_SALT,
+     ADMIN_JWT_SECRET, TRANSFER_TOKEN_SALT, JWT_SECRET in backend/.env.
+
+----------------------------------------------------------------
+Q5. "http://localhost:1337 is not a valid origin"
+----------------------------------------------------------------
+A: Strapi's admin panel itself runs on :1337, but the CORS whitelist
+   only had :5173. Fix:
+   - Added http://localhost:1337 to default origin list in
+     config/middlewares.js.
+   - Added `url: env('PUBLIC_URL', 'http://localhost:1337')` to
+     config/server.js to satisfy admin origin validation.
+
+
+================================================================
+PHASE 2 — Deployment Questions
+================================================================
+
+----------------------------------------------------------------
+Q6. I'm using Vercel + a live URL — how to use?
+----------------------------------------------------------------
+A: Vercel hosts the SvelteKit frontend, but Strapi needs a separate
+   always-on Node host (Vercel is serverless and won't run Strapi).
+   The frontend reads PUBLIC_STRAPI_URL from env, so you point Vercel's
+   PUBLIC_STRAPI_URL at wherever Strapi is hosted (Railway / Render /
+   Koyeb / a VPS / a tunnel).
+
+----------------------------------------------------------------
+Q7. I don't have any Railway / backend URL.
+----------------------------------------------------------------
+A: Then the deployed Vercel frontend has nowhere to fetch data from.
+   Options: deploy Strapi to a free host (Render free tier sleeps after
+   15 min; Koyeb / Northflank stay up), or run locally + tunnel.
+
+----------------------------------------------------------------
+Q8. But is it not possible to run on local PC?
+----------------------------------------------------------------
+A: Yes — locally both frontend and backend run fine:
+   - Frontend: http://localhost:5173 (npm run dev)
+   - Backend:  http://localhost:1337 (npm run develop)
+   For a *deployed* Vercel frontend to talk to your local backend,
+   you need a tunnel — Vercel can't reach localhost.
+
+----------------------------------------------------------------
+Q9. Without ngrok is not possible?
+----------------------------------------------------------------
+A: Other free tunnel options: cloudflared (Cloudflare Tunnel) — free
+   and stable; localtunnel; tailscale funnel. Any of these expose
+   localhost:1337 as a public HTTPS URL. Without any tunnel and without
+   a hosted backend, deployed Vercel cannot reach your PC.
+
+----------------------------------------------------------------
+Q10. I just want to check on my local system that frontend and
+     backend are ready to live.
+----------------------------------------------------------------
+A: Just run both locally and use the local URLs:
+   - frontend/.env -> PUBLIC_STRAPI_URL=http://localhost:1337
+   - Open http://localhost:5173 in the browser.
+   If pages load, data fetches succeed, no 403s — you're live-ready.
+
+
+================================================================
+PHASE 3 — Strapi Content & Permissions
+================================================================
+
+----------------------------------------------------------------
+Q11. After adding content, how can I check in frontend?
+----------------------------------------------------------------
+A: Make sure the entry is *Published* (not Draft) in Strapi admin,
+   then refresh the corresponding frontend page (e.g. /departments).
+   Frontend services hit /api/<collection> on the Strapi URL set in
+   PUBLIC_STRAPI_URL.
+
+----------------------------------------------------------------
+Q12. I have added a Department now, how do I see it in frontend?
+----------------------------------------------------------------
+A: Visit http://localhost:5173/departments — it auto-loads from
+   /api/departments. If empty or 403, check publish state + public
+   permissions (see Q13).
+
+----------------------------------------------------------------
+Q13. Still {"status":403,"name":"ForbiddenError"...}
+----------------------------------------------------------------
+A: Public role had 0 permissions in the DB. Fix:
+   - Strapi admin -> Settings -> Users & Permissions -> Roles ->
+     Public -> enable `find` and `findOne` for every collection -> Save.
+   - In this project the GUI was sluggish, so we inserted 18 rows
+     directly into up_permissions + up_permissions_role_links via
+     better-sqlite3 (linked to public role id=2).
+
+----------------------------------------------------------------
+Q14. Do I need to republish / rerun frontend and backend?
+----------------------------------------------------------------
+A: After changing permissions, restart Strapi (Ctrl+C, npm run develop).
+   Frontend SSR caches per request, so just refresh the page — no
+   restart needed for content/permission changes.
+
+----------------------------------------------------------------
+Q15. Still 403 after that.
+----------------------------------------------------------------
+A: After the direct-DB permission insert + Strapi restart, /api/...
+   endpoints returned data. If still 403: confirm restart happened,
+   confirm entries are Published, and re-check Public role in admin UI.
+
+----------------------------------------------------------------
+Q16. [Image: "Complete Your Profile First"] resolve and match image.
+----------------------------------------------------------------
+A: That screen appears on first admin login. Complete the profile
+   form (first name, last name, password) once and you're in. The 500
+   on register-admin was already fixed by regenerating secrets (Q4).
+
+----------------------------------------------------------------
+Q17. Sorry, wrong input, stop.
+----------------------------------------------------------------
+A: Acknowledged — halted that action.
+
+----------------------------------------------------------------
+Q18. Added Admission content but can't see it on frontend.
+----------------------------------------------------------------
+A: Same root cause as Q13 — Public permissions on the `admission`
+   collection. Enable find/findOne, ensure entry is Published.
+
+----------------------------------------------------------------
+Q19. Added a Department, how can I see it? (after publish)
+----------------------------------------------------------------
+A: With permissions fixed, /departments and /departments/[slug] now
+   render the entry. Image fields need to be uploaded via the media
+   library and attached to the entry to appear.
+
+
+================================================================
+PHASE 4 — LJKU HTML Integration into /about
+================================================================
+
+----------------------------------------------------------------
+Q20. Create all these LJ links under /about including content
+     and heading. Keep my UI same. Don't change.
+----------------------------------------------------------------
+A: Built 19 sub-routes under frontend/src/routes/about/ — all using
+   the project's existing design system (PageHero, SEOHead, .card,
+   .section-title, navy-* / primary-* / gold-* classes). None of the
+   dark-themed CSS from the source HTML was imported.
+
+----------------------------------------------------------------
+Q21. Only paste content/heading/text into about/+page.svelte.
+     Keep UI same. Update CLAUDE.md and README.md.
+----------------------------------------------------------------
+A: Approach taken: instead of dumping everything into one giant
+   +page.svelte, split content across 20 routes (1 hub + 19 sub-pages)
+   matching LJKU's site structure. CLAUDE.md and README.md updated
+   with the new route inventory.
+
+----------------------------------------------------------------
+Q22. /model opus
+----------------------------------------------------------------
+A: Model switched to Opus for higher-quality content generation
+   across the 19 pages.
+
+----------------------------------------------------------------
+Q23. Integrate all links -> +page.svelte, keep UI same, don't change.
+----------------------------------------------------------------
+A: Created the full set:
+   /about                       (already existed: LJU at a Glance)
+   /about/vision-mission
+   /about/people
+   /about/organogram
+   /about/statute
+   /about/strategic-plan
+   /about/committees
+   /about/code-of-conduct
+   /about/policies
+   /about/welfare
+   /about/gog-approval
+   /about/ugc
+   /about/national-accreditation
+   /about/ict-facilities
+   /about/sports-infrastructure
+   /about/green-campus
+   /about/alternate-energy
+   /about/water-conservation
+   /about/barrier-free
+   /about/contact
+
+   Also:
+   - Navbar.svelte: converted "About" to a 20-item dropdown with
+     scrollable max-height for the long list.
+   - sitemap.xml/+server.ts: added all 19 new routes.
+   - CLAUDE.md + README.md: route inventory updated.
+
+
+================================================================
+PHASE 5 — Deployment Follow-ups
+================================================================
+
+----------------------------------------------------------------
+Q24. Can I use my backend URL with frontend URL?
+----------------------------------------------------------------
+A: Yes. Frontend reads PUBLIC_STRAPI_URL from env:
+       PUBLIC_STRAPI_URL=https://your-backend-url.com
+       PUBLIC_SITE_URL=https://your-frontend-url.com
+   Backend must allow the frontend origin in CORS_ORIGIN:
+       CORS_ORIGIN=https://your-frontend-url.com,http://localhost:5173
+   After changing PUBLIC_* on Vercel, redeploy (build-time bake-in).
+   After changing CORS_ORIGIN, restart Strapi. Also ensure Public role
+   has find/findOne enabled.
+
+----------------------------------------------------------------
+Q25. Is it possible without Railway or Render?
+----------------------------------------------------------------
+A: Yes. Strapi runs on any Node host:
+   - Fly.io (free limited, global)
+   - Koyeb (free 1 service)
+   - Northflank (free limited, Docker-based)
+   - VPS: Hetzner / DigitalOcean / Linode / Contabo (~$4-5/mo)
+   - Your own PC + tunnel (cloudflared is free and stable)
+   - Raspberry Pi + tunnel
+   Vercel and Netlify Functions DON'T work — Strapi needs a
+   persistent server.
+   Databases: Neon, Supabase, Turso (free), or SQLite file.
+
+----------------------------------------------------------------
+Q26. Which is better for all-in-one deployment?
+----------------------------------------------------------------
+A: Recommendation: Railway.
+   - Frontend + backend + Postgres all in one dashboard.
+   - Auto SSL, custom domains, env management, internal networking.
+   - Single GitHub repo with auto-detection.
+   - ~$5/month after $5 trial credit.
+   Alternatives:
+   - Render: free but backend sleeps after 15 min idle
+   - Northflank: free tier (2 services), Docker-based
+   - Koyeb: free (1 service), DB needs separate (Neon)
+   - Fly.io: global edge, more technical
+   - VPS (Hetzner ~EUR 4/mo): full control, cheapest long-term
+
+----------------------------------------------------------------
+Q27. Create prompts.txt for me till now.
+----------------------------------------------------------------
+A: Created d:\wd\prompts.txt with all 27 prompts grouped into 5 phases.
+
+----------------------------------------------------------------
+Q28. Update my all prompts in it.
+----------------------------------------------------------------
+A: Verified completeness and added prompt #28 itself + an updated-on
+   timestamp.
+
+----------------------------------------------------------------
+Q29. Update prompts.txt with question and your answers.
+----------------------------------------------------------------
+A: Rewrote prompts.txt as a full Q&A log — each prompt is now paired
+   with a concise summary of my answer or what was done.
+
+
+================================================================
+PHASE 6 — Playwright Testing Setup
+================================================================
+
+----------------------------------------------------------------
+Q30. Implement Playwright for testing purpose with report.
+----------------------------------------------------------------
+A: Wired Playwright into frontend/ with HTML + JSON + list reporters.
+   Files created / changed:
+   - frontend/playwright.config.ts
+       * 4 browser projects: chromium, firefox, webkit, mobile-chrome
+       * Reporters: html (./playwright-report), list, json
+       * webServer auto-spawns `npm run build && npm run preview --port 4173`
+       * baseURL overridable via PLAYWRIGHT_BASE_URL env
+       * trace/screenshot/video on failure
+   - frontend/package.json
+       * devDep: "@playwright/test": "^1.48.0"
+       * scripts: test, test:ui, test:headed, test:report, test:install
+   - frontend/.gitignore
+       * Added: test-results/, playwright-report/, playwright/.cache/
+   - frontend/tests/home.spec.ts
+       * Title, navbar logo, Apply Now CTA, nav-to-about
+   - frontend/tests/about.spec.ts
+       * Asserts all 20 about routes render correct H1, plus breadcrumb
+   - frontend/tests/navigation.spec.ts
+       * 12 top-level routes return < 400; sitemap.xml served as XML and
+         contains new about sub-routes
+   - frontend/tests/seo.spec.ts
+       * <title> and meta[name=description] present and non-empty
+   - CLAUDE.md + README.md
+       * Added Testing sections with commands and report locations
+
+   Reports:
+   - HTML: frontend/playwright-report/index.html
+   - JSON: frontend/playwright-report/results.json
+   - Failure traces / screenshots / videos: frontend/test-results/
+
+----------------------------------------------------------------
+Q31. Is it required to run above commands which defined?
+----------------------------------------------------------------
+A: Only 3 commands are strictly required:
+       cd frontend
+       npm install            # one-time, installs @playwright/test
+       npm run test:install   # one-time, downloads browser binaries (~400 MB)
+       npm run test           # runs all tests, generates HTML report
+   Optional helpers:
+   - npm run test:ui      -> interactive debugging UI
+   - npm run test:headed  -> visible browser while running
+   - npm run test:report  -> reopen last HTML report
+   Minimum path to a report:
+       cd frontend
+       npm install
+       npm run test:install
+       npm run test
+       npm run test:report
+
+----------------------------------------------------------------
+Q32. "playwright is not recognized as an internal or external command"
+----------------------------------------------------------------
+A: That error means `npm install` hasn't been run (or didn't finish).
+   The scripts call `playwright` from node_modules/.bin which only
+   exists after install.
+   Fix:
+       cd d:\wd\frontend
+       npm install
+       npm run test:install
+       npm run test
+   If npm install fails:
+       node --version          # need Node 18+
+       npm install --save-dev @playwright/test
+       npx playwright install
+       npm run test
+   Common pitfalls table:
+   - "playwright not recognized" / "Cannot find module @playwright/test"
+       -> Package not installed -> npm install
+   - "Executable doesn't exist at ...chromium"
+       -> Browsers not downloaded -> npm run test:install
+   - Tests hang on "waiting for localhost:4173"
+       -> Build failed -> verify `npm run build` runs cleanly
+
+----------------------------------------------------------------
+Q33. Update all .md file and txt file.
+----------------------------------------------------------------
+A: Inventory + updates:
+   - d:\wd\CLAUDE.md           -> already updated with Playwright section
+   - d:\wd\README.md           -> already updated with Testing section
+   - d:\wd\prompts.txt         -> appended Q30-Q33 (this entry)
+   - d:\wd\frontend\static\robots.txt -> no changes needed (still
+     correctly references /sitemap.xml; new about routes are auto-
+     listed by the sitemap endpoint)
+
+================================================================
+END OF LOG (last updated: 2026-05-28)
+================================================================

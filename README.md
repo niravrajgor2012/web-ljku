@@ -196,6 +196,31 @@ The website uses a custom Tailwind design system:
 | `/careers` | Job openings at LJ University |
 | `/faq` | Frequently asked questions |
 
+## Testing (Playwright)
+
+End-to-end tests live in `frontend/tests/` and cover home page, the full
+`/about` section (20 routes), top-level navigation and SEO meta.
+
+```bash
+cd frontend
+npm install
+npm run test:install   # one-time: download browser binaries
+npm run test           # run all tests, headless, all browsers
+npm run test:ui        # interactive UI mode
+npm run test:headed    # run with visible browser
+npm run test:report    # open the HTML report
+```
+
+Reports:
+- **HTML report** → `frontend/playwright-report/index.html`
+- **JSON summary** → `frontend/playwright-report/results.json`
+- Failure traces, screenshots and videos are saved under `frontend/test-results/`
+
+Run against a non-default URL:
+```bash
+PLAYWRIGHT_BASE_URL=https://your-site.vercel.app npm run test
+```
+
 ## License
 
 Proprietary – LJ University. All rights reserved.

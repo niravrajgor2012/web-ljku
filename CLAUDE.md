@@ -19,7 +19,19 @@ npm install
 npm run dev          # Start dev server (http://localhost:5173)
 npm run build        # Production build
 npm run check        # TypeScript check
+
+# Playwright (E2E)
+npm run test:install # One-time: install browser binaries
+npm run test         # Headless run across chromium/firefox/webkit/mobile
+npm run test:ui      # Interactive UI mode (recommended for debugging)
+npm run test:headed  # Run with visible browser
+npm run test:report  # Open last HTML report (./playwright-report/)
 ```
+
+### Testing
+- Specs live in `frontend/tests/*.spec.ts`
+- HTML reports written to `frontend/playwright-report/`; JSON summary at `playwright-report/results.json`
+- Config in `frontend/playwright.config.ts` — auto-spawns `vite preview` on port 4173 unless `PLAYWRIGHT_BASE_URL` is set
 
 ### Architecture
 - **Routes**: `src/routes/` – SvelteKit file-based routing
