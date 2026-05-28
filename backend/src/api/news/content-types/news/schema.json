@@ -3,7 +3,7 @@
   "collectionName": "news_articles",
   "info": {
     "singularName": "news",
-    "pluralName": "news",
+    "pluralName": "news-articles",
     "displayName": "News",
     "description": "University news articles"
   },
