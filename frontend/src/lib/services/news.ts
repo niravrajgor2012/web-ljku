@@ -8,6 +8,6 @@ export async function getNews(limit = 10, featured = false): Promise<StrapiItem<
     'pagination[pageSize]': limit,
   };
   if (featured) params['filters[isFeatured][$eq]'] = true;
-  const res = await api.fetchAPI<News>('/news', params);
+  const res = await api.fetchAPI<News>('/news-articles', params);
   return api.extractData(res);
 }
