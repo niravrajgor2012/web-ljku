@@ -4,10 +4,9 @@
   "version": "0.1.0",
   "description": "LJ University CMS Backend powered by Strapi",
   "scripts": {
-    "copy-schemas": "node -e \"const{cpSync,mkdirSync,readdirSync}=require('fs');const{join}=require('path');readdirSync('src/api').forEach(api=>{const src=join('src/api',api,'content-types');const dst=join('dist/src/api',api,'content-types');try{cpSync(src,dst,{recursive:true});console.log('Copied',api)}catch(e){}})\"",
-    "develop": "npm run copy-schemas && strapi develop",
-    "start": "npm run copy-schemas && strapi start",
-    "build": "strapi build && npm run copy-schemas",
+    "develop": "strapi develop",
+    "start": "strapi start",
+    "build": "strapi build",
     "strapi": "strapi"
   },
   "dependencies": {
