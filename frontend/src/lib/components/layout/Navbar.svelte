@@ -7,7 +7,32 @@
   let mobileOpen = false;
 
   const navLinks = [
-    { label: 'About', href: '/about' },
+    {
+      label: 'About',
+      href: '/about',
+      children: [
+        { label: 'LJU at a Glance', href: '/about' },
+        { label: 'Vision & Mission', href: '/about/vision-mission' },
+        { label: 'People', href: '/about/people' },
+        { label: 'Organogram', href: '/about/organogram' },
+        { label: 'Statute', href: '/about/statute' },
+        { label: 'Strategic Plan', href: '/about/strategic-plan' },
+        { label: 'Committees', href: '/about/committees' },
+        { label: 'Code of Conduct', href: '/about/code-of-conduct' },
+        { label: 'Policies', href: '/about/policies' },
+        { label: 'Student Welfare', href: '/about/welfare' },
+        { label: 'GoG Approval', href: '/about/gog-approval' },
+        { label: 'UGC Recognition', href: '/about/ugc' },
+        { label: 'National Accreditation', href: '/about/national-accreditation' },
+        { label: 'ICT Facilities', href: '/about/ict-facilities' },
+        { label: 'Sports Infrastructure', href: '/about/sports-infrastructure' },
+        { label: 'Green Campus', href: '/about/green-campus' },
+        { label: 'Alternate Energy', href: '/about/alternate-energy' },
+        { label: 'Water Conservation', href: '/about/water-conservation' },
+        { label: 'Barrier-Free Campus', href: '/about/barrier-free' },
+        { label: 'Administrative Contacts', href: '/about/contact' },
+      ],
+    },
     {
       label: 'Academics',
       href: '#',
@@ -92,7 +117,7 @@
                 </svg>
               </button>
               <!-- Dropdown -->
-              <div class="absolute top-full left-0 mt-1 w-52 bg-white rounded-xl shadow-card-hover border border-gray-100 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+              <div class="absolute top-full left-0 mt-1 w-56 max-h-[75vh] overflow-y-auto bg-white rounded-xl shadow-card-hover border border-gray-100 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
                 <ul class="py-2">
                   {#each link.children as child}
                     <li>

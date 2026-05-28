@@ -23,6 +23,15 @@ npm run check        # TypeScript check
 
 ### Architecture
 - **Routes**: `src/routes/` – SvelteKit file-based routing
+  - `about/` – LJU institutional pages with 20 sub-routes:
+    - `/about` (LJU at a Glance), `/about/vision-mission`, `/about/people`,
+      `/about/organogram`, `/about/statute`, `/about/strategic-plan`,
+      `/about/committees`, `/about/code-of-conduct`, `/about/policies`,
+      `/about/welfare`, `/about/gog-approval`, `/about/ugc`,
+      `/about/national-accreditation`, `/about/ict-facilities`,
+      `/about/sports-infrastructure`, `/about/green-campus`,
+      `/about/alternate-energy`, `/about/water-conservation`,
+      `/about/barrier-free`, `/about/contact`
 - **Components**: `src/lib/components/` – Reusable Svelte components
   - `layout/` – Navbar, MobileMenu, Footer
   - `home/` – Hero, Stats, Departments, Programs, Events, Placements, Gallery, Testimonials, CTA

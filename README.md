@@ -14,7 +14,7 @@ A modern, high-performance university website built with SvelteKit + Strapi CMS,
 
 ## Features
 
-- **15 Pages** – Home, About, Departments, Programs, Admissions, Faculty, Placements, Events, Gallery, Student Life, Research, Contact, Careers, FAQ, Department Detail
+- **35+ Pages** – Home, full /about section with 20 institutional sub-pages, Departments, Programs, Admissions, Faculty, Placements, Events, Gallery, Student Life, Research, Contact, Careers, FAQ, Department Detail
 - **Fully Dynamic** – All content managed through Strapi admin panel
 - **SSR** – Server-side rendering for SEO and performance
 - **Responsive** – Mobile-first design for all screen sizes
@@ -162,7 +162,26 @@ The website uses a custom Tailwind design system:
 | Route | Page |
 |-------|------|
 | `/` | Home (hero, stats, departments, programs, events, placements, gallery, testimonials) |
-| `/about` | About University (history, leadership, accreditations) |
+| `/about` | About — LJU at a Glance |
+| `/about/vision-mission` | Vision, mission and core values |
+| `/about/people` | Leadership and governance |
+| `/about/organogram` | Organisational structure |
+| `/about/statute` | University statute |
+| `/about/strategic-plan` | Strategic plan 2025-2030 |
+| `/about/committees` | Statutory and advisory committees |
+| `/about/code-of-conduct` | Code of conduct |
+| `/about/policies` | Institutional policies |
+| `/about/welfare` | Student welfare programs |
+| `/about/gog-approval` | Government of Gujarat approval |
+| `/about/ugc` | UGC Section 2(f) recognition |
+| `/about/national-accreditation` | NAAC, NBA, NIRF and other accreditations |
+| `/about/ict-facilities` | ICT facilities and digital infrastructure |
+| `/about/sports-infrastructure` | Sports infrastructure |
+| `/about/green-campus` | Green campus initiatives |
+| `/about/alternate-energy` | Renewable energy initiatives |
+| `/about/water-conservation` | Water conservation initiatives |
+| `/about/barrier-free` | Barrier-free, accessible campus |
+| `/about/contact` | Administrative contacts |
 | `/departments` | All Schools & Departments |
 | `/departments/[slug]` | Dynamic Department Detail |
 | `/programs` | Programs with search & filter |
