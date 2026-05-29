@@ -441,6 +441,60 @@ A: Built the full Academics section using the project's existing UI
      academics route renders with the correct H1.
    - CLAUDE.md + README.md: route inventory updated.
 
+
+================================================================
+PHASE 8 — Git Memory Error Fix
+================================================================
+
+----------------------------------------------------------------
+Q35. [Screenshot: VS Code error "Git: fatal: Out of memory, malloc
+     failed (tried to allocate 524288000 bytes)"]
+     Do it yourself.
+----------------------------------------------------------------
+A: Diagnosed: repo was healthy (30 MB packed, 1205 loose objects, no
+   corruption per `git fsck`). The 524 MB malloc came from VS Code's
+   Git integration mmap-ing thousands of loose objects on a memory-
+   tight Windows session.
+
+   Fix applied — local-only Git config in d:\wd\.git/config:
+       pack.windowMemory          = 100m
+       pack.packSizeLimit         = 100m
+       pack.deltaCacheSize        = 128m
+       pack.threads               = 1
+       core.packedGitLimit        = 128m
+       core.packedGitWindowSize   = 128m
+   Then ran `git gc` to consolidate 1205 loose objects into the pack.
+
+   Result:
+       Loose objects:  1,205 (6.44 MiB)  ->  0
+       Packed:         10,772 (29.38 MiB) -> 11,977 (33.58 MiB)
+       git fsck:       clean
+       git status:     clean, up to date with origin/main
+
+   User was advised to fully restart VS Code so its Git extension
+   reloads with the new config.
+
+----------------------------------------------------------------
+Q36. Yes (verify it worked).
+----------------------------------------------------------------
+A: Verified: all 6 config keys now present in .git/config; loose
+   object count is 0; fsck reports no corruption; status works
+   cleanly. The malloc cause is gone.
+
+----------------------------------------------------------------
+Q37. Update all .md and .txt file.
+----------------------------------------------------------------
+A: Inventory + updates:
+   - d:\wd\prompts.txt   -> this Phase 8 added (Q35-Q37)
+   - d:\wd\CLAUDE.md     -> no change needed; project structure
+                            unchanged, /academics section already
+                            documented from Q34
+   - d:\wd\README.md     -> no change needed; route inventory and
+                            Testing section already current
+   - d:\wd\frontend\static\robots.txt -> no change needed
+   Note: Q34 also surfaced a small post-edit to Navbar.svelte
+   (lint/formatting tidy) that was kept as-is.
+
 ================================================================
 END OF LOG (last updated: 2026-05-28)
 ================================================================
