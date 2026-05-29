@@ -2,10 +2,8 @@
   import { page } from '$app/stores';
   import { onMount } from 'svelte';
   import MobileMenu from './MobileMenu.svelte';
-
   let scrolled = false;
   let mobileOpen = false;
-
   const navLinks = [
     {
       label: 'About',
