@@ -182,6 +182,15 @@ The website uses a custom Tailwind design system:
 | `/about/water-conservation` | Water conservation initiatives |
 | `/about/barrier-free` | Barrier-free, accessible campus |
 | `/about/contact` | Administrative contacts |
+| `/academics` | Academics overview hub |
+| `/academics/teaching-hospital` | LJ Institute of Physiotherapy OPD clinics |
+| `/academics/value-added-courses` | Value Added Courses (VACs) |
+| `/academics/international-cell` | Study Abroad and IELTS training |
+| `/academics/collaborations` | 40+ international partner institutions |
+| `/academics/student-centric-methods` | 10 student-centric teaching methodologies |
+| `/academics/awards` | Awards and recognitions |
+| `/academics/syllabus` | 2024-25 revised syllabus |
+| `/academics/feedback` | Stakeholder feedback forms and reports |
 | `/departments` | All Schools & Departments |
 | `/departments/[slug]` | Dynamic Department Detail |
 | `/programs` | Programs with search & filter |

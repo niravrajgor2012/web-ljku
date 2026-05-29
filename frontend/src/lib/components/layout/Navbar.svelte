@@ -35,8 +35,17 @@
     },
     {
       label: 'Academics',
-      href: '#',
+      href: '/academics',
       children: [
+        { label: 'Academics Overview', href: '/academics' },
+        { label: 'Teaching Hospital', href: '/academics/teaching-hospital' },
+        { label: 'Value Added Courses', href: '/academics/value-added-courses' },
+        { label: 'International Cell', href: '/academics/international-cell' },
+        { label: 'Collaborations', href: '/academics/collaborations' },
+        { label: 'Student-Centric Methods', href: '/academics/student-centric-methods' },
+        { label: 'Awards', href: '/academics/awards' },
+        { label: 'Syllabus', href: '/academics/syllabus' },
+        { label: 'Feedback', href: '/academics/feedback' },
         { label: 'Departments', href: '/departments' },
         { label: 'Programs', href: '/programs' },
         { label: 'Faculty', href: '/faculty' },

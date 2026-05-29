@@ -44,6 +44,11 @@ npm run test:report  # Open last HTML report (./playwright-report/)
       `/about/sports-infrastructure`, `/about/green-campus`,
       `/about/alternate-energy`, `/about/water-conservation`,
       `/about/barrier-free`, `/about/contact`
+  - `academics/` – Academics section with 9 routes:
+    - `/academics` (overview hub), `/academics/teaching-hospital`,
+      `/academics/value-added-courses`, `/academics/international-cell`,
+      `/academics/collaborations`, `/academics/student-centric-methods`,
+      `/academics/awards`, `/academics/syllabus`, `/academics/feedback`
 - **Components**: `src/lib/components/` – Reusable Svelte components
   - `layout/` – Navbar, MobileMenu, Footer
   - `home/` – Hero, Stats, Departments, Programs, Events, Placements, Gallery, Testimonials, CTA
